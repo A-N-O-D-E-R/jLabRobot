@@ -1,0 +1,44 @@
+{
+  "plates": [
+    {
+      "name": "3596",
+      "vendor": "corning",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.36,
+      "material": "polystyrene",
+      "description": "Costar 96-well flat bottom plate"
+    },
+    {
+      "name": "3370",
+      "vendor": "corning",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.2,
+      "material": "polystyrene",
+      "description": "Costar 96-well round bottom plate"
+    },
+    {
+      "name": "3704",
+      "vendor": "corning",
+      "rows": 16,
+      "columns": 24,
+      "wellSpacingMm": 4.5,
+      "wellVolumeMl": 0.112,
+      "material": "polystyrene",
+      "description": "Costar 384-well flat bottom plate"
+    },
+    {
+      "name": "3912",
+      "vendor": "corning",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 2.0,
+      "material": "polypropylene",
+      "description": "Costar 96-well deep well plate"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "plates": [
+    {
+      "name": "Nunc-96-MicroWell",
+      "vendor": "thermofisher",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.4,
+      "material": "polystyrene",
+      "description": "Nunc 96-well microplate, flat bottom, 400µL"
+    },
+    {
+      "name": "Nunc-384-MicroWell",
+      "vendor": "thermofisher",
+      "rows": 16,
+      "columns": 24,
+      "wellSpacingMm": 4.5,
+      "wellVolumeMl": 0.12,
+      "material": "polystyrene",
+      "description": "Nunc 384-well microplate, 120µL"
+    },
+    {
+      "name": "Nunc-DeepWell-96",
+      "vendor": "thermofisher",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 2.0,
+      "material": "polypropylene",
+      "description": "Nunc 96 DeepWell plate, 2mL"
+    },
+    {
+      "name": "MicroAmp-PCR-96",
+      "vendor": "thermofisher",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.2,
+      "material": "polypropylene",
+      "description": "MicroAmp 96-well PCR plate, 0.2mL"
+    },
+    {
+      "name": "Gibco-Cell-Culture-96",
+      "vendor": "thermofisher",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.36,
+      "material": "polystyrene",
+      "description": "Gibco 96-well cell culture plate, TC-treated"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "plates": [
+    {
+      "name": "low_volume_tip_rack_96",
+      "vendor": "hamilton",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.05,
+      "material": "polypropylene",
+      "description": "Hamilton Low Volume Tip Rack 96"
+    },
+    {
+      "name": "high_volume_tip_rack_96",
+      "vendor": "hamilton",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 1.0,
+      "material": "polypropylene",
+      "description": "Hamilton High Volume Tip Rack 96"
+    },
+    {
+      "name": "trough_300ml",
+      "vendor": "hamilton",
+      "rows": 1,
+      "columns": 8,
+      "wellSpacingMm": 18.0,
+      "wellVolumeMl": 37.5,
+      "material": "polypropylene",
+      "description": "Hamilton 300mL Trough (8 channels)"
+    }
+  ]
+}

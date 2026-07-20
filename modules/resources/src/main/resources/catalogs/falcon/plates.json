@@ -1,0 +1,44 @@
+{
+  "plates": [
+    {
+      "name": "353072",
+      "vendor": "falcon",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.34,
+      "material": "polystyrene",
+      "description": "Falcon 96-well flat bottom microplate"
+    },
+    {
+      "name": "353916",
+      "vendor": "falcon",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.39,
+      "material": "polystyrene",
+      "description": "Falcon 96-well U-bottom microplate"
+    },
+    {
+      "name": "353293",
+      "vendor": "falcon",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.36,
+      "material": "polystyrene",
+      "description": "Falcon 96-well TC-treated plate for cell culture"
+    },
+    {
+      "name": "353263",
+      "vendor": "falcon",
+      "rows": 6,
+      "columns": 4,
+      "wellSpacingMm": 19.3,
+      "wellVolumeMl": 3.5,
+      "material": "polystyrene",
+      "description": "Falcon 24-well plate, TC-treated"
+    }
+  ]
+}

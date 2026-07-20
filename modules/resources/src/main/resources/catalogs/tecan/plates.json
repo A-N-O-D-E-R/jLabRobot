@@ -1,0 +1,34 @@
+{
+  "plates": [
+    {
+      "name": "96_well_plate",
+      "vendor": "tecan",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.3,
+      "material": "polystyrene",
+      "description": "Tecan 96-well microplate"
+    },
+    {
+      "name": "384_well_plate",
+      "vendor": "tecan",
+      "rows": 16,
+      "columns": 24,
+      "wellSpacingMm": 4.5,
+      "wellVolumeMl": 0.1,
+      "material": "polystyrene",
+      "description": "Tecan 384-well microplate"
+    },
+    {
+      "name": "deep_well_96",
+      "vendor": "tecan",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 2.0,
+      "material": "polypropylene",
+      "description": "Tecan 96-well deep well plate"
+    }
+  ]
+}

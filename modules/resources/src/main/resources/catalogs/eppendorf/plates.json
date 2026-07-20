@@ -1,0 +1,34 @@
+{
+  "plates": [
+    {
+      "name": "twin.tec_PCR_96",
+      "vendor": "eppendorf",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.2,
+      "material": "polypropylene",
+      "description": "Eppendorf twin.tec PCR plate 96-well"
+    },
+    {
+      "name": "deepwell_96_2000ul",
+      "vendor": "eppendorf",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 2.0,
+      "material": "polypropylene",
+      "description": "Eppendorf Deepwell Plate 96/2000µL"
+    },
+    {
+      "name": "microplate_96",
+      "vendor": "eppendorf",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.3,
+      "material": "polystyrene",
+      "description": "Eppendorf Cell Culture Plate 96-well"
+    }
+  ]
+}

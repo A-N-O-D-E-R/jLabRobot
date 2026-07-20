@@ -1,0 +1,44 @@
+{
+  "plates": [
+    {
+      "name": "P-96-450V-C",
+      "vendor": "axygen",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.45,
+      "material": "polypropylene",
+      "description": "Axygen 96-well V-bottom plate, 450µL"
+    },
+    {
+      "name": "P-DW-2ML",
+      "vendor": "axygen",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 2.0,
+      "material": "polypropylene",
+      "description": "Axygen 96-well DeepWell plate, 2mL"
+    },
+    {
+      "name": "PCR-96-C",
+      "vendor": "axygen",
+      "rows": 8,
+      "columns": 12,
+      "wellSpacingMm": 9.0,
+      "wellVolumeMl": 0.2,
+      "material": "polypropylene",
+      "description": "Axygen 96-well PCR microplate, 0.2mL"
+    },
+    {
+      "name": "P-384-SQ-C",
+      "vendor": "axygen",
+      "rows": 16,
+      "columns": 24,
+      "wellSpacingMm": 4.5,
+      "wellVolumeMl": 0.08,
+      "material": "polypropylene",
+      "description": "Axygen 384-well square well plate, 80µL"
+    }
+  ]
+}
