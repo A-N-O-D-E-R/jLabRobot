@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controls liquid handling operations including tip management, aspiration, and dispensing.
+ * Tracks tip positions and well volumes throughout the protocol execution.
+ */
 public class LiquidHandler {
     private static final Logger log = LoggerFactory.getLogger(LiquidHandler.class);
 
@@ -22,6 +26,11 @@ public class LiquidHandler {
     private final Head head;
     private final VolumeTracker volumeTracker;
 
+    /**
+     * Constructs a LiquidHandler with a specified deck and backend.
+     * @param deck the deck containing resources
+     * @param backend the backend for executing commands
+     */
     public LiquidHandler(Deck deck, Backend backend) {
         this.deck = deck;
         this.backend = backend;
@@ -29,16 +38,28 @@ public class LiquidHandler {
         this.volumeTracker = new VolumeTracker();
     }
 
+    /**
+     * Initializes the liquid handler and backend.
+     * @throws BackendException if initialization fails
+     */
     public void initialize() throws BackendException {
         log.info("Initializing liquid handler");
         backend.initialize();
     }
 
+    /**
+     * Shuts down the liquid handler and backend.
+     */
     public void shutdown() {
         log.info("Shutting down liquid handler");
         backend.shutdown();
     }
 
+    /**
+     * Picks up tips from a tip rack.
+     * @param tips the list of tips to pick up
+     * @throws BackendException if the operation fails
+     */
     public void pickUpTips(List<Tip> tips) throws BackendException {
         log.info("Picking up {} tips", tips.size());
         head.setTips(tips);
@@ -55,6 +76,12 @@ public class LiquidHandler {
         tips.forEach(Tip::markUsed);
     }
 
+    /**
+     * Aspirates liquid from multiple wells.
+     * @param wells the list of wells to aspirate from
+     * @param volumesMicroliters the volume to aspirate from each well in microliters
+     * @throws BackendException if the operation fails
+     */
     public void aspirate(List<Well> wells, List<Double> volumesMicroliters) throws BackendException {
         if (wells.size() != volumesMicroliters.size()) {
             throw new IllegalArgumentException("Wells and volumes must have same size");
@@ -79,6 +106,12 @@ public class LiquidHandler {
         }
     }
 
+    /**
+     * Dispenses liquid to multiple wells.
+     * @param wells the list of wells to dispense to
+     * @param volumesMicroliters the volume to dispense to each well in microliters
+     * @throws BackendException if the operation fails
+     */
     public void dispense(List<Well> wells, List<Double> volumesMicroliters) throws BackendException {
         if (wells.size() != volumesMicroliters.size()) {
             throw new IllegalArgumentException("Wells and volumes must have same size");
@@ -103,6 +136,11 @@ public class LiquidHandler {
         }
     }
 
+    /**
+     * Drops tips at specified locations.
+     * @param tips the list of tips to drop
+     * @throws BackendException if the operation fails
+     */
     public void dropTips(List<Tip> tips) throws BackendException {
         log.info("Dropping {} tips", tips.size());
 
@@ -118,14 +156,26 @@ public class LiquidHandler {
         head.clearTips();
     }
 
+    /**
+     * Gets the deck associated with this liquid handler.
+     * @return the deck
+     */
     public Deck getDeck() {
         return deck;
     }
 
+    /**
+     * Gets the pipette head.
+     * @return the head
+     */
     public Head getHead() {
         return head;
     }
 
+    /**
+     * Gets the volume tracker for monitoring well volumes.
+     * @return the volume tracker
+     */
     public VolumeTracker getVolumeTracker() {
         return volumeTracker;
     }

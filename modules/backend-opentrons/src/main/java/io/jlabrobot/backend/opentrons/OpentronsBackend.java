@@ -18,13 +18,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Backend for Opentrons OT-2 and Flex robots.
+ * Backend implementation for Opentrons OT-2 and Flex robots.
+ *
+ * Uses Python protocol script generation and execution to control Opentrons robots.
+ * Accumulates abstract jLabRobot commands into an in-memory queue, translates them to
+ * Opentrons Python API calls, writes to a temporary protocol script file, and executes
+ * via the `opentrons_simulate` or `opentrons_execute` command-line tools.
  *
  * Implementation strategy: Python protocol script generation
  * - Generates Python protocol scripts using Opentrons API
  * - Executes via `opentrons_execute` command or uploads to robot
  *
- * Alternative approach (requires ot_api Python package):
+ * Alternative approaches (not yet implemented):
  * - Use ProcessBuilder to call Python scripts that import ot_api
  * - Or: Embed Jython/GraalVM Python for direct ot_api calls
  *
@@ -38,11 +43,23 @@ public class OpentronsBackend implements Backend {
     private Path protocolScript;
     private boolean initialized = false;
 
+    /**
+     * Constructs an OpentronsBackend instance.
+     *
+     * @param robotAddress the robot connection address: IP address for real robot or "simulate" for simulation mode
+     */
     public OpentronsBackend(String robotAddress) {
         this.robotAddress = robotAddress;
         this.commandQueue = new ArrayList<>();
     }
 
+    /**
+     * Initializes the Opentrons backend by creating a temporary protocol script and writing the header.
+     *
+     * Sets up the Python environment and creates the Opentrons protocol metadata.
+     *
+     * @throws BackendException if script creation or header writing fails
+     */
     @Override
     public void initialize() throws BackendException {
         log.info("Initializing Opentrons backend: {}", robotAddress);
@@ -63,6 +80,17 @@ public class OpentronsBackend implements Backend {
         }
     }
 
+    /**
+     * Queues a command for batch execution on the Opentrons robot.
+     *
+     * Translates the abstract command to Opentrons Python API code and accumulates it.
+     * The actual execution occurs when shutdown() is called, which writes all queued
+     * commands to the protocol script and executes it.
+     *
+     * @param cmd the command to execute
+     * @return a success result indicating the command was queued
+     * @throws BackendException if the backend is not initialized
+     */
     @Override
     public CommandResult executeCommand(Command cmd) throws BackendException {
         if (!initialized) {
@@ -80,6 +108,12 @@ public class OpentronsBackend implements Backend {
         return CommandResult.success("Command queued: " + cmd.name());
     }
 
+    /**
+     * Shuts down the Opentrons backend, writing queued commands and executing the protocol.
+     *
+     * Writes all accumulated commands to the protocol script file and executes it via
+     * the appropriate Opentrons command-line tool (simulate or execute).
+     */
     @Override
     public void shutdown() {
         if (protocolScript != null && initialized) {
@@ -104,6 +138,13 @@ public class OpentronsBackend implements Backend {
         }
     }
 
+    /**
+     * Writes the Opentrons protocol header to the script file.
+     *
+     * Includes metadata, labware definitions, and instrument setup.
+     *
+     * @throws IOException if writing to the script file fails
+     */
     private void writeProtocolHeader() throws IOException {
         String header = """
             from opentrons import protocol_api
@@ -129,6 +170,13 @@ public class OpentronsBackend implements Backend {
         Files.writeString(protocolScript, header, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
+    /**
+     * Writes all queued commands to the protocol script file.
+     *
+     * Appends Python code for each queued command to the protocol script.
+     *
+     * @throws IOException if writing to the script file fails
+     */
     private void writeQueuedCommands() throws IOException {
         if (commandQueue.isEmpty()) {
             return;
@@ -142,6 +190,14 @@ public class OpentronsBackend implements Backend {
         Files.writeString(protocolScript, commands.toString(), StandardOpenOption.APPEND);
     }
 
+    /**
+     * Translates an abstract command to Opentrons Python API code.
+     *
+     * Maps command names and parameters to the corresponding Opentrons API method calls.
+     *
+     * @param cmd the command to translate
+     * @return a Python code line suitable for inclusion in the Opentrons protocol script
+     */
     private String translateCommand(Command cmd) {
         // ponytail: stub translation, expand per Opentrons API
         return switch (cmd.name()) {
@@ -159,6 +215,12 @@ public class OpentronsBackend implements Backend {
         };
     }
 
+    /**
+     * Extracts the volume parameter from a command's parameter map.
+     *
+     * @param params the command parameters
+     * @return the volume value, or a default value if not found
+     */
     private double getVolume(Map<String, Object> params) {
         Object vol = params.get("volume");
         if (vol instanceof Number num) {
@@ -167,11 +229,21 @@ public class OpentronsBackend implements Backend {
         return 50.0; // ponytail: default
     }
 
+    /**
+     * Simulates the protocol locally using the `opentrons_simulate` command.
+     *
+     * @throws IOException if the simulation command fails
+     */
     private void simulateProtocol() throws IOException {
         log.info("Simulating Opentrons protocol...");
         executeCommand(List.of("opentrons_simulate", protocolScript.toString()));
     }
 
+    /**
+     * Executes the protocol on the connected Opentrons robot using the `opentrons_execute` command.
+     *
+     * @throws IOException if the execution command fails or robot is unreachable
+     */
     private void executeProtocol() throws IOException {
         log.info("Executing protocol on robot: {}", robotAddress);
         // ponytail: upload via HTTP API or SSH, then trigger run
@@ -179,6 +251,14 @@ public class OpentronsBackend implements Backend {
         executeCommand(List.of("opentrons_execute", "-n", robotAddress, protocolScript.toString()));
     }
 
+    /**
+     * Executes a system command via ProcessBuilder and logs output.
+     *
+     * Captures and logs stdout/stderr and checks the exit code.
+     *
+     * @param command the command and arguments as a list of strings
+     * @throws IOException if the process execution fails
+     */
     private void executeCommand(List<String> command) throws IOException {
         ProcessBuilder pb = new ProcessBuilder(command);
         pb.redirectErrorStream(true);

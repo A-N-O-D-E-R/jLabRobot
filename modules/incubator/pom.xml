@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.jlabrobot</groupId>
+        <groupId>io.github.a-n-o-d-e-r.jlabrobot</groupId>
         <artifactId>jlabrobot-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
@@ -13,20 +13,21 @@
 
     <artifactId>jlabrobot-incubator</artifactId>
     <name>jLabRobot Incubator</name>
+    <url>https://github.com/A-N-O-D-E-R/jLabRobot</url>
 
     <dependencies>
         <dependency>
-            <groupId>io.jlabrobot</groupId>
+            <groupId>io.github.a-n-o-d-e-r.jlabrobot</groupId>
             <artifactId>jlabrobot-machines</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jlabrobot</groupId>
+            <groupId>io.github.a-n-o-d-e-r.jlabrobot</groupId>
             <artifactId>jlabrobot-resources</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jlabrobot</groupId>
+            <groupId>io.github.a-n-o-d-e-r.jlabrobot</groupId>
             <artifactId>jlabrobot-core</artifactId>
             <version>${project.version}</version>
         </dependency>

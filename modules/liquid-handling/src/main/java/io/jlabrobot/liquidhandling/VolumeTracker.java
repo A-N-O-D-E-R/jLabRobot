@@ -8,15 +8,27 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Tracks volume changes in wells during liquid handling operations.
+ * Logs warnings when aspirations or dispenses exceed well capacity.
+ */
 public class VolumeTracker {
     private static final Logger log = LoggerFactory.getLogger(VolumeTracker.class);
 
     private final Map<Well, Volume> wellVolumes;
 
+    /**
+     * Constructs an empty VolumeTracker.
+     */
     public VolumeTracker() {
         this.wellVolumes = new HashMap<>();
     }
 
+    /**
+     * Records an aspiration operation from a well.
+     * @param well the well being aspirated from
+     * @param volume the volume being aspirated
+     */
     public void recordAspirate(Well well, Volume volume) {
         Volume currentVolume = wellVolumes.getOrDefault(well, well.getCurrentVolume());
         Volume newVolume = currentVolume.subtract(volume);
@@ -29,6 +41,11 @@ public class VolumeTracker {
         well.setCurrentVolume(newVolume);
     }
 
+    /**
+     * Records a dispense operation to a well.
+     * @param well the well being dispensed to
+     * @param volume the volume being dispensed
+     */
     public void recordDispense(Well well, Volume volume) {
         Volume currentVolume = wellVolumes.getOrDefault(well, well.getCurrentVolume());
         Volume newVolume = currentVolume.add(volume);
@@ -41,10 +58,18 @@ public class VolumeTracker {
         well.setCurrentVolume(newVolume);
     }
 
+    /**
+     * Gets the current volume in a well.
+     * @param well the well
+     * @return the volume
+     */
     public Volume getVolume(Well well) {
         return wellVolumes.getOrDefault(well, well.getCurrentVolume());
     }
 
+    /**
+     * Clears all tracked volume data.
+     */
     public void reset() {
         wellVolumes.clear();
     }

@@ -17,18 +17,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Specialized liquid handler for 96-channel pipette operations.
+ * Supports full plate operations and pattern-based aspirations/dispensing.
+ */
 public class LiquidHandler96 extends LiquidHandler {
     private static final Logger log = LoggerFactory.getLogger(LiquidHandler96.class);
 
     private final Head96 head96;
     private final TipTracker tipTracker;
 
+    /**
+     * Constructs a LiquidHandler96 with a specified deck and backend.
+     * @param deck the deck containing resources
+     * @param backend the backend for executing commands
+     */
     public LiquidHandler96(Deck deck, Backend backend) {
         super(deck, backend);
         this.head96 = new Head96();
         this.tipTracker = new TipTracker(96);
     }
 
+    /**
+     * Picks up all 96 tips from a tip rack simultaneously.
+     * @param tipRack the tip rack containing 96 tips
+     * @throws BackendException if the operation fails or tip rack doesn't have exactly 96 tips
+     */
     public void pickUpTips96(TipRack tipRack) throws BackendException {
         log.info("Picking up 96 tips from {}", tipRack.getName());
 
@@ -49,6 +63,10 @@ public class LiquidHandler96 extends LiquidHandler {
         }
     }
 
+    /**
+     * Drops all 96 tips simultaneously.
+     * @throws BackendException if the operation fails
+     */
     public void dropTips96() throws BackendException {
         log.info("Dropping 96 tips");
 
@@ -56,6 +74,12 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Aspirates the same volume from all 96 wells of a plate.
+     * @param plate the plate to aspirate from
+     * @param volume the volume to aspirate from each well
+     * @throws BackendException if the operation fails or plate doesn't have exactly 96 wells
+     */
     public void aspirate96(Plate plate, Volume volume) throws BackendException {
         log.info("Aspirating {}µL from all 96 wells of {}", volume.microliters(), plate.getName());
 
@@ -78,6 +102,12 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Dispenses the same volume to all 96 wells of a plate.
+     * @param plate the plate to dispense to
+     * @param volume the volume to dispense to each well
+     * @throws BackendException if the operation fails or plate doesn't have exactly 96 wells
+     */
     public void dispense96(Plate plate, Volume volume) throws BackendException {
         log.info("Dispensing {}µL to all 96 wells of {}", volume.microliters(), plate.getName());
 
@@ -100,6 +130,13 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Aspirates the same volume from all wells in a specific column.
+     * @param plate the plate to aspirate from
+     * @param column the column number (1-12)
+     * @param volume the volume to aspirate from each well
+     * @throws BackendException if the operation fails
+     */
     public void aspirateColumn(Plate plate, int column, Volume volume) throws BackendException {
         log.info("Aspirating column {} ({}µL per well)", column, volume.microliters());
 
@@ -121,6 +158,13 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Dispenses the same volume to all wells in a specific column.
+     * @param plate the plate to dispense to
+     * @param column the column number (1-12)
+     * @param volume the volume to dispense to each well
+     * @throws BackendException if the operation fails
+     */
     public void dispenseColumn(Plate plate, int column, Volume volume) throws BackendException {
         log.info("Dispensing column {} ({}µL per well)", column, volume.microliters());
 
@@ -137,6 +181,13 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Aspirates the same volume from all wells in a specific row.
+     * @param plate the plate to aspirate from
+     * @param row the row letter (A-H)
+     * @param volume the volume to aspirate from each well
+     * @throws BackendException if the operation fails
+     */
     public void aspirateRow(Plate plate, char row, Volume volume) throws BackendException {
         log.info("Aspirating row {} ({}µL per well)", row, volume.microliters());
 
@@ -153,6 +204,13 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Dispenses the same volume to all wells in a specific row.
+     * @param plate the plate to dispense to
+     * @param row the row letter (A-H)
+     * @param volume the volume to dispense to each well
+     * @throws BackendException if the operation fails
+     */
     public void dispenseRow(Plate plate, char row, Volume volume) throws BackendException {
         log.info("Dispensing row {} ({}µL per well)", row, volume.microliters());
 
@@ -169,6 +227,13 @@ public class LiquidHandler96 extends LiquidHandler {
         backend.executeCommand(cmd);
     }
 
+    /**
+     * Transfers liquid from all wells of a source plate to a destination plate.
+     * @param source the source plate
+     * @param dest the destination plate
+     * @param volume the volume to transfer from/to each well
+     * @throws BackendException if the operation fails
+     */
     public void transfer96(Plate source, Plate dest, Volume volume) throws BackendException {
         log.info("Transferring {}µL from {} to {} (96-well)",
             volume.microliters(), source.getName(), dest.getName());
@@ -177,6 +242,10 @@ public class LiquidHandler96 extends LiquidHandler {
         dispense96(dest, volume);
     }
 
+    /**
+     * Gets the 96-channel pipette head.
+     * @return the head96
+     */
     public Head96 getHead96() {
         return head96;
     }

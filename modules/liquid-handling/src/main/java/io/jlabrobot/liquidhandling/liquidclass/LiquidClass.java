@@ -2,6 +2,10 @@ package io.jlabrobot.liquidhandling.liquidclass;
 
 import io.jlabrobot.core.Volume;
 
+/**
+ * Defines liquid handling parameters for different types of liquids (water, serum, DMSO, etc.).
+ * Parameters include flow rates, settling times, and air gaps to optimize pipetting for each liquid type.
+ */
 public record LiquidClass(
     String name,
     double aspirationFlowRate,
@@ -14,12 +18,20 @@ public record LiquidClass(
     double blowoutVolume,
     String description
 ) {
+    /**
+     * Validates that flow rates are positive.
+     * @throws IllegalArgumentException if flow rates are not positive
+     */
     public LiquidClass {
         if (aspirationFlowRate <= 0 || dispenseFlowRate <= 0) {
             throw new IllegalArgumentException("Flow rates must be positive");
         }
     }
-    
+
+    /**
+     * Creates a liquid class for standard aqueous solutions (water).
+     * @return the water liquid class
+     */
     public static LiquidClass water() {
         return new LiquidClass(
             "Water",
@@ -34,7 +46,11 @@ public record LiquidClass(
             "Standard aqueous solution"
         );
     }
-    
+
+    /**
+     * Creates a liquid class for high viscosity biological fluids (serum).
+     * @return the serum liquid class
+     */
     public static LiquidClass serum() {
         return new LiquidClass(
             "Serum",
@@ -49,7 +65,11 @@ public record LiquidClass(
             "High viscosity biological fluid"
         );
     }
-    
+
+    /**
+     * Creates a liquid class for DMSO (dimethyl sulfoxide).
+     * @return the DMSO liquid class
+     */
     public static LiquidClass dmso() {
         return new LiquidClass(
             "DMSO",
@@ -64,7 +84,11 @@ public record LiquidClass(
             "Dimethyl sulfoxide - volatile organic solvent"
         );
     }
-    
+
+    /**
+     * Creates a liquid class for ethanol (volatile alcohol).
+     * @return the ethanol liquid class
+     */
     public static LiquidClass ethanol() {
         return new LiquidClass(
             "Ethanol",
