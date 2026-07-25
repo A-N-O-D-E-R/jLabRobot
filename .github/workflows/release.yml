@@ -45,3 +45,4 @@ jobs:
           files: |
             **/target/*.jar
             **/target/*.pom
+          fail_on_unmatched_files: false
